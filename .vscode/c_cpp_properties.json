@@ -7,7 +7,8 @@
       },
       "includePath": [
         "/opt/ros/jazzy/include/**",
-        "/usr/include/**"
+        "/usr/include/**",
+        "/home/ace/ros2_ws/install/my_robot_interfaces/include/**"
       ],
       "name": "ROS",
       "intelliSenseMode": "gcc-x64",
