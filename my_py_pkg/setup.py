@@ -26,7 +26,8 @@ setup(
             "add_two_ints_server = my_py_pkg.add_two_ints_server:main ",
             "add_two_ints_client = my_py_pkg.add_two_ints_client:main",
             "hw_status_publisher = my_py_pkg.hardware_status_publisher:main",
-            "number_publisher = my_py_pkg.number_publisher:main"
+            "number_publisher = my_py_pkg.number_publisher:main",
+            'apf_navigator = my_py_pkg.apf_navigator:main',
         ],
     },
 )

@@ -1,0 +1,15 @@
+<launch xmlns="http://ros.org/schema/launch"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://ros.org/schema/launch http://ros.org/schema/launch/launch.xsd">
+
+    <!-- Launch Gazebo server -->
+    <node pkg="gazebo_ros" exec="gzserver" output="screen"/>
+
+    <!-- Launch Gazebo client -->
+    <node pkg="gazebo_ros" exec="gzclient" output="screen"/>
+
+    <!-- Spawn the URDF robot -->
+    <node pkg="gazebo_ros" exec="spawn_entity.py" output="screen"
+          args="-file $(find-pkg-share my_robot_description)/urdf/my_robot.urdf -entity my_robot"/>
+
+</launch>
