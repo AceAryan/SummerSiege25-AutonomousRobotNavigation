@@ -1,0 +1,29 @@
+<launch>
+    <!-- Launch arguments -->
+    <arg name="use_sim_time" default="true" description="Use simulation (Gazebo) clock if true"/>
+    <arg name="gui" default="true" description="Set to 'false' to run headless."/>
+
+    <!-- Launch Gazebo with the custom world -->
+    <include file="$(find ros_gz_sim)/launch/gz_sim.launch.py">
+        <arg name="gz_args" value="-r $(if $(arg gui), -g, ) $(find autobot_worlds)/worlds/custom_env.sdf"/>
+    </include>
+
+    <!-- Robot State Publisher for TurtleBot3 Waffle -->
+    <param name="robot_description" command="xacro $(find turtlebot3_description)/urdf/turtlebot3_waffle.urdf.xacro"/>
+    <node pkg="robot_state_publisher" exec="robot_state_publisher" name="robot_state_publisher" output="screen">
+        <param name="use_sim_time" value="$(arg use_sim_time)"/>
+        <param name="robot_description" value="$(robot_description)"/>
+    </node>
+
+    <!-- Spawn TurtleBot3 Waffle in the corner (e.g., x=-4.0, y=-6.0) -->
+    <node pkg="ros_gz_sim" exec="create" name="spawn_turtlebot3_waffle" output="screen">
+        <param name="use_sim_time" value="$(arg use_sim_time)"/>
+        <arg name="-topic" value="robot_description"/>
+        <arg name="-name" value="turtlebot3_waffle"/>
+        <arg name="-x" value="-4.0"/>
+        <arg name="-y" value="-6.0"/>
+        <arg name="-z" value="0.01"/>
+        <arg name="-Y" value="0.0"/>
+        <arg name="-allow_renaming" value="true"/>
+    </node>
+</launch>

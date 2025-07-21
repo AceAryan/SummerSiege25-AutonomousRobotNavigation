@@ -1,0 +1,27 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "${default}",
+        "limitSymbolsToIncludedHeaders": false
+      },
+      "includePath": [
+        "/home/ace/ros2_ws/install/my_robot_interfaces/include/**",
+        "/home/ace/ros2_ws/install/gazebo_msgs/include/**",
+        "/opt/ros/jazzy/include/**",
+        "/home/ace/ros2_ws/src/autobot/include/**",
+        "/home/ace/ros2_ws/src/my_cpp_pkg/include/**",
+        "/home/ace/ros2_ws/src/my_robot_worlds/include/**",
+        "/home/ace/ros2_ws/src/turtlesim_catch_em_all/include/**",
+        "include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS",
+      "intelliSenseMode": "gcc-x64",
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "gnu11",
+      "cppStandard": "c++14"
+    }
+  ],
+  "version": 4
+}

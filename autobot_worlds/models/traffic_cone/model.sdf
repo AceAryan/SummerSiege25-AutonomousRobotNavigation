@@ -1,0 +1,26 @@
+<?xml version='1.0'?>
+<sdf version='1.7'>
+  <model name='traffic_cone'>
+    <link name='link'>
+      <visual name='visual'>
+        <geometry>
+          <mesh>
+            <uri>meshes/Cone.dae</uri>
+            <scale>0.5 0.5 0.5</scale> </mesh>  </geometry>
+        <material>
+          <ambient>1 0.5 0 1</ambient>
+          <diffuse>1 0.5 0 1</diffuse>
+          <specular>0.1 0.1 0.1 1</specular>
+          <emissive>0 0 0 1</emissive>
+        </material>
+      </visual>
+      <collision name='collision'>
+        <geometry>
+          <mesh>
+            <uri>meshes/Cone.dae</uri>
+            <scale>0.5 0.5 0.5</scale> </mesh>  </geometry>
+      </collision>
+    </link>
+    <static>true</static>
+  </model>
+</sdf>

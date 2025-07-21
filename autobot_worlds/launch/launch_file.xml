@@ -1,0 +1,61 @@
+<launch>
+    <!-- Declare launch arguments -->
+    <arg name="use_sim_time" default="true" description="Use simulation (Gazebo) clock if true"/>
+    <arg name="gui" default="true" description="Set to 'false' to run headless."/>
+
+    <!-- Set environment variable for robot model (default: burger) -->
+    <env name="TURTLEBOT3_MODEL" value="burger"/>
+
+    <!-- Paths (update if your package or world file names change) -->
+    <let name="pkg_my_robot_worlds" value="$(find autobot_worlds)"/>
+    <let name="world_path" value="$(pkg_my_robot_worlds)/worlds/custom_env.sdf"/>
+    <let name="pkg_turtlebot3_description" value="$(find turtlebot3_description)"/>
+    <let name="xacro_file_path" value="$(pkg_turtlebot3_description)/urdf/turtlebot3_$(env TURTLEBOT3_MODEL).urdf.xacro"/>
+
+    <!-- Robot State Publisher -->
+    <node pkg="robot_state_publisher" exec="robot_state_publisher" name="robot_state_publisher" output="screen">
+        <param name="use_sim_time" value="$(arg use_sim_time)"/>
+        <param name="robot_description" command="xacro $(xacro_file_path)"/>
+    </node>
+
+    <!-- Launch Gazebo (ros_gz_sim) -->
+    <include file="$(find ros_gz_sim)/launch/gz_sim.launch.py">
+        <arg name="gz_args" value="-r $(if $(arg gui), -g, ) $(world_path)"/>
+    </include>
+
+    <!-- Spawn the TurtleBot3 Robot in Gazebo -->
+    <node pkg="ros_gz_sim" exec="create" output="screen" name="spawn_turtlebot3">
+        <param name="use_sim_time" value="$(arg use_sim_time)"/>
+        <remap from="robot_description" to="robot_description"/>
+        <arg name="-topic" value="robot_description"/>
+        <arg name="-name" value="turtlebot3_$(env TURTLEBOT3_MODEL)"/>
+        <arg name="-x" value="0.0"/>
+        <arg name="-y" value="0.0"/>
+        <arg name="-z" value="0.0"/>
+        <arg name="-Y" value="0.0"/>
+        <arg name="-allow_renaming" value="true"/>
+    </node>
+
+    <!-- Bridges -->
+    <node pkg="ros_gz_bridge" exec="ros_gz_bridge" name="cmd_vel_bridge" output="screen">
+        <param name="use_sim_time" value="$(arg use_sim_time)"/>
+        <arg name="arguments" value="/cmd_vel@geometry_msgs/msg/Twist@gz.msgs.Twist"/>
+        <remap from="/cmd_vel" to="/model/turtlebot3_$(env TURTLEBOT3_MODEL)/cmd_vel"/>
+    </node>
+    <node pkg="ros_gz_bridge" exec="ros_gz_bridge" name="lidar_bridge" output="screen">
+        <param name="use_sim_time" value="$(arg use_sim_time)"/>
+        <arg name="arguments" value="/scan@sensor_msgs/msg/LaserScan@gz.msgs.LaserScan"/>
+        <remap from="/scan" to="/model/turtlebot3_$(env TURTLEBOT3_MODEL)/scan"/>
+    </node>
+    <node pkg="ros_gz_bridge" exec="ros_gz_bridge" name="odom_bridge" output="screen">
+        <param name="use_sim_time" value="$(arg use_sim_time)"/>
+        <arg name="arguments" value="/odom@nav_msgs/msg/Odometry@gz.msgs.Odometry"/>
+        <remap from="/odom" to="/model/turtlebot3_$(env TURTLEBOT3_MODEL)/odom"/>
+    </node>
+    <node pkg="ros_gz_bridge" exec="ros_gz_bridge" name="imu_bridge" output="screen">
+        <param name="use_sim_time" value="$(arg use_sim_time)"/>
+        <arg name="arguments" value="/imu@sensor_msgs/msg/Imu@gz.msgs.IMU"/>
+        <remap from="/imu" to="/model/turtlebot3_$(env TURTLEBOT3_MODEL)/imu"/>
+    </node>
+    <!-- Add more bridges as needed for additional sensors -->
+</launch>

@@ -1,0 +1,14 @@
+{
+    "python.autoComplete.extraPaths": [
+        "/home/ace/ros2_ws/install/my_py_pkg/lib/python3.12/site-packages",
+        "/home/ace/ros2_ws/install/my_robot_interfaces/lib/python3.12/site-packages",
+        "/home/ace/ros2_ws/install/gazebo_msgs/lib/python3.12/site-packages",
+        "/opt/ros/jazzy/lib/python3.12/site-packages"
+    ],
+    "python.analysis.extraPaths": [
+        "/home/ace/ros2_ws/install/my_py_pkg/lib/python3.12/site-packages",
+        "/home/ace/ros2_ws/install/my_robot_interfaces/lib/python3.12/site-packages",
+        "/home/ace/ros2_ws/install/gazebo_msgs/lib/python3.12/site-packages",
+        "/opt/ros/jazzy/lib/python3.12/site-packages"
+    ]
+}
